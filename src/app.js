@@ -35,7 +35,10 @@ document.getElementById('run-btn').addEventListener('click', async () => {
             resultDisplay.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
         } else {
             renderTable(data.result);
-            dbInfoDisplay.innerHTML = renderJsonWithTooltips(data.db_structure);
+            if (data.db_structure) {
+                renderTableButtons(data.db_structure);
+                dbInfoDisplay.innerHTML = renderJsonWithTooltips(data.db_structure);
+            }
         }
 
     } catch (err) {
@@ -73,6 +76,22 @@ function renderTable(rows) {
     });
     html += '</tbody></table>';
     document.getElementById('result-display').innerHTML = html;
+}
+
+function renderTableButtons(dbStructure) {
+    const shortcutContainer = document.getElementById('table-shortcuts');
+    if (!shortcutContainer || !dbStructure) return;
+
+    shortcutContainer.innerHTML = '';
+
+    Object.keys(dbStructure).forEach(tableName => {
+        const button = document.createElement('button');
+        button.className = 'table-btn';
+        button.textContent = tableName;
+
+        button.onclick = () => insertSQL(tableName);
+        shortcutContainer.appendChild(button);
+    });
 }
 
 function insertSQL(tableName) {

