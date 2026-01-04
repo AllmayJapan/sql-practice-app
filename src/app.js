@@ -1,21 +1,26 @@
-const keyDescriptions = {
-    "column": "カラム(列)の名称",
-    "type": "データの型(int, varchar)など",
-    "nullable": "空(NULL ヌル)を許容するかどうか",
-    "key": "主キー(PRI)などの制約情報"
-}
-function renderJsonWithTooltips(obj) {
-    let jsonStr = JSON.stringify(obj, null, 4);
+let editor;
+require.config({ paths: {'vs': 'node_modules/monaco-editor/min/vs' }});
 
-    return jsonStr.replace(/"(\w+)":/g, (match, key) => {
-        const desc = keyDescriptions[key] || "データベースの情報です";
-        return `<span class="json-key" data-tooltip="${desc}">"${key}"</span>`;
+require(['vs/editor/editor.main'], function() {
+    editor = monaco.editor.create(document.getElementById('sql-editor-container'), {
+        value: "SELECT * FROM users;",
+        language: 'sql',
+        theme: 'vs-light',
+        automaticLayout: true,
+        fontSize: 16
     });
-}
+
+    editor.addCommand(monaco.keyMod.CtrlCmd | monaco.KeyCode.Enter, function() {
+        document.getElementById('run-btn').click();
+    });
+})
+
 document.getElementById('run-btn').addEventListener('click', async () => {
-    const sql = document.getElementById('sql-editor').value;
+    const sql = editor ? editor.getValue() : '';
     const resultDisplay = document.getElementById('result-display');
     const dbInfoDisplay = document.getElementById('db-structure-json');
+
+    if (!sql) return;
 
     try {
         const response = await fetch('execute.php', {
@@ -37,6 +42,21 @@ document.getElementById('run-btn').addEventListener('click', async () => {
         resultDisplay.innerHTML = `<p style="color:red;">通信エラー</p>`;
     }
 });
+
+const keyDescriptions = {
+    "column": "カラム(列)の名称",
+    "type": "データの型(int, varchar)など",
+    "nullable": "空(NULL ヌル)を許容するかどうか",
+    "key": "主キー(PRI)などの制約情報"
+}
+function renderJsonWithTooltips(obj) {
+    let jsonStr = JSON.stringify(obj, null, 4);
+
+    return jsonStr.replace(/"(\w+)":/g, (match, key) => {
+        const desc = keyDescriptions[key] || "データベースの情報です";
+        return `<span class="json-key" data-tooltip="${desc}">"${key}"</span>`;
+    });
+}
 
 function renderTable(rows) {
     if (!rows || rows.length === 0) {
@@ -71,10 +91,3 @@ window.addEventListener('load', () => {
 
 const sqlEditor = document.getElementById('sql-editor');
 const runBtn = document.getElementById('run-btn');
-
-sqlEditor.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key == 'Enter') {
-        e.preventDefault();
-        runBtn.click();
-    }
-})

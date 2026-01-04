@@ -40,7 +40,8 @@ $initial_json = getDatabaseStructureJSON($pdo, 'sql-practice');
                     }
                     ?>
                 </div>
-                <textarea id="sql-editor" placeholder="SELECT * FROM users;"></textarea>
+                <div id="sql-editor-container"></div>
+                <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
                 <button id="run-btn">実行 (Ctrl+Enter)</button>
             </div>
             

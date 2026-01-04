@@ -57,7 +57,15 @@ header { background: #333; color: white; padding: 10px; display: flex; justify-c
 .sql-result { flex: 1; background: #fff; }
 
 /* エディタと結果表示の調整 */
-textarea { flex: 1; font-family: monospace; font-size: 1.1rem; resize: none; margin-bottom: 5px; }
+#table-shortcuts {
+    margin-bottom: 10px;
+}
+
+#sql-editor-container {
+    flex: 1;
+    border: 1px solid #ccc;
+    min-height: 300px;
+}
 pre { font-size: 0.9rem; background: #eee; padding: 10px; border-radius: 4px; }
 table { border-collapse: collapse; width: 100%; }
 th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
