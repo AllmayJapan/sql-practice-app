@@ -1,0 +1,21 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: sql-practice-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sql-practice
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  web:
+    build: ./docker/php
+    container_name: sql-practice-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db

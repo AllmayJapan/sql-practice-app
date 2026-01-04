@@ -1,0 +1,33 @@
+/* 基本レイアウト */
+body, html { height: 100%; margin: 0; font-family: sans-serif; overflow: hidden; }
+header { background: #333; color: white; padding: 10px; display: flex; justify-content: space-between; }
+
+.container {
+    display: flex;
+    flex-direction: column; /* 上下分割 */
+    height: calc(100vh - 45px);
+}
+
+.top-row {
+    display: flex; /* 左右分割 */
+    flex: 1;
+    border-bottom: 2px solid #ccc;
+}
+
+.pane {
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.sql-input { flex: 1; border-right: 1px solid #ccc; }
+.db-info { flex: 1; background: #f8f9fa; }
+.sql-result { flex: 1; background: #fff; }
+
+/* エディタと結果表示の調整 */
+textarea { flex: 1; font-family: monospace; font-size: 1.1rem; resize: none; margin-bottom: 5px; }
+pre { font-size: 0.9rem; background: #eee; padding: 10px; border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+th { background-color: #f2f2f2; }
