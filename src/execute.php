@@ -27,7 +27,7 @@ try {
         $result = [["message" => "クエリ成功。影響を受けた行数: $count"]];
     }
 
-    $db_structure_json = getDatabaseStructureJSON($pdo, 'sql_practice');
+    $db_structure_json = getDatabaseStructureJSON($pdo, 'sql-practice');
     $db_structure = json_decode($db_structure_json, true);
 
     echo json_encode([

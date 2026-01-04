@@ -8,7 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 require_once 'db.php';
 require_once 'db_info.php';
 
-$initial_json = getDatabaseStructureJSON($pdo, 'sql_practice');
+// 初期表示用のDB構造を取得
+$initial_json = getDatabaseStructureJSON($pdo, 'sql-practice');
 ?>
 
 <!DOCTYPE html>
