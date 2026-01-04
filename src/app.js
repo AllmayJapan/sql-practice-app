@@ -13,7 +13,7 @@ require(['vs/editor/editor.main'], function() {
     editor.addCommand(monaco.keyMod.CtrlCmd | monaco.KeyCode.Enter, function() {
         document.getElementById('run-btn').click();
     });
-})
+});
 
 document.getElementById('run-btn').addEventListener('click', async () => {
     const sql = editor ? editor.getValue() : '';
@@ -76,9 +76,14 @@ function renderTable(rows) {
 }
 
 function insertSQL(tableName) {
-    const sqlEditor = document.getElementById('sql-editor');
-    sqlEditor.value = `SELECT * FROM ${tableName};`;
-    sqlEditor.focus();
+    if (editor) {
+        const query = `SELECT * FROM ${tableName};`;
+        editor.setValue(query);
+        editor.focus();
+
+        const lineCount = editor.getModel().getLineCount();
+        editor.setPosition({ lineNumber: lineCount, column: query.length + 1 });
+    }
 }
 
 window.addEventListener('load', () => {
@@ -88,6 +93,3 @@ window.addEventListener('load', () => {
         dbInfoDisplay.innerHTML = renderJsonWithTooltips(initialObj);
     } catch(e) { }
 });
-
-const sqlEditor = document.getElementById('sql-editor');
-const runBtn = document.getElementById('run-btn');
