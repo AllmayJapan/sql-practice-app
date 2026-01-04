@@ -54,6 +54,7 @@ function renderTable(rows) {
     html += '</tbody></table>';
     document.getElementById('result-display').innerHTML = html;
 }
+
 window.addEventListener('load', () => {
     const dbInfoDisplay = document.getElementById('db-structure-json');
     try {
@@ -61,3 +62,13 @@ window.addEventListener('load', () => {
         dbInfoDisplay.innerHTML = renderJsonWithTooltips(initialObj);
     } catch(e) { }
 });
+
+const sqlEditor = document.getElementById('sql-editor');
+const runBtn = document.getElementById('run-btn');
+
+sqlEditor.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key == 'Enter') {
+        e.preventDefault();
+        runBtn.click();
+    }
+})
