@@ -43,10 +43,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" name="password" placeholder="パスワード"><br>
         <button type="submit">ログイン</button>
     </form>
-
-    <div style="margin-top:20px; padding:10px; border:1px solid #ccc; background:#eee;">
-        <strong>💡 ヒント（攻撃デモ用）:</strong><br>
-        ユーザー名に <code>' OR '1'='1' -- </code> と入れてみてね。
-    </div>
 </body>
 </html>
