@@ -55,6 +55,12 @@ function renderTable(rows) {
     document.getElementById('result-display').innerHTML = html;
 }
 
+function insertSQL(tableName) {
+    const sqlEditor = document.getElementById('sql-editor');
+    sqlEditor.value = `SELECT * FROM ${tableName};`;
+    sqlEditor.focus();
+}
+
 window.addEventListener('load', () => {
     const dbInfoDisplay = document.getElementById('db-structure-json');
     try {

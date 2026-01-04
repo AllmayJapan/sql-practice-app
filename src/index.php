@@ -29,6 +29,17 @@ $initial_json = getDatabaseStructureJSON($pdo, 'sql-practice');
         <div class="top-row">
             <div class="pane sql-input">
                 <h3>SQL Editor</h3>
+                <div id="table-shortcuts">
+                    <?php
+                    $db_data = json_decode($initial_json, true);
+                    if ($db_data && !isset($db_data['error'])) {
+                        foreach (array_keys($db_data) as $tableName) {
+                            $safeTable = htmlspecialchars($tableName);
+                            echo "<button class='table-btn' onclick=\"insertSQL('{$safeTable}')\">{$safeTable}</button> ";
+                        }
+                    }
+                    ?>
+                </div>
                 <textarea id="sql-editor" placeholder="SELECT * FROM users;"></textarea>
                 <button id="run-btn">実行 (Ctrl+Enter)</button>
             </div>
